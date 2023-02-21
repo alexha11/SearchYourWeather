@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const express = require('express');
 const https = require('https');
 const bodyParser = require("body-parser");
@@ -9,9 +12,13 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + "/index.html");
 });
 
+const api_key = process.env.API_KEY;
+
 app.post('/', (req, res) => {
     country = req.body.cityName;
-    const url1 = "https://api.openweathermap.org/data/2.5/weather?q=" + country + "&appid=7dbf885a4aaa697da1ef065934e59600&units=metric";
+    //console.log(api_key);
+    const url1 = "https://api.openweathermap.org/data/2.5/weather?q=" + country + "&appid=" + api_key + "&units=metric";
+    console.log(url1);
     https.get(url1, (response) => {
         console.log(response.statusCode);
 
